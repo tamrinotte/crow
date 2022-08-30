@@ -6,7 +6,7 @@ from sys import argv
 from datetime import datetime
 
 # VARIABLES
-ckcPath = f'/root/.cyber_kill_chain'
+ckcPath = f'/root/.cyber_kill_chain/reconnaissance'
 ckcFolders = ["pingDocs", "nmapDocs", "ncDocs", "gbDocs"]
 pingDocsFolder = f'{ckcPath}/{ckcFolders[0]}'
 nmapDocsFolder = f'{ckcPath}/{ckcFolders[1]}'
