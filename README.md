@@ -1,5 +1,6 @@
 # CROW
 ![CrowLogo](https://cdn.pixabay.com/photo/2017/01/31/17/00/animal-2025562_960_720.png)
+
 Crow is a command line reconnaissance tool that you can use to collect information about the target system and document them in xml files with dates and times. It's very flexible that's why you can do everything you wish do with the tools that are automated by crow. Crow is allowing you to control the fallowing softwares. It's allowing you to combine the options to execute better reconnaissance attacks. For example you could use -torc, -nmap and -grabB to scan the services available on the target device from a tor connection, write the output of nmap scan in to a xml file and to grab all the service banners using that information just with 1 line of code over a tor connection again. 
  
 1) iputils-ping 
