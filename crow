@@ -36,7 +36,6 @@ def rSIC(requiredSoftwares):
             installPermission = str(input(f'Crow needs to install {s} to work properly. Do you allow crow to install {s} software? (y/n): ')).lower().strip()
             if "y" in installPermission or "yes" in installPermission:
                 system(f'apt install {s} -y')
-                system(f'apt install {s} -y')
 
         softwareStatus = popen(f'apt-cache policy {s}').read()
         if "***" in softwareStatus and "(none)" not in softwareStatus:
