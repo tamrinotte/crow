@@ -4,7 +4,6 @@
 from os import system, path, makedirs, listdir, popen
 from sys import argv
 from datetime import datetime
-from requests import get
 
 # VARIABLES
 ckcPath = f'/root/.cyber_kill_chain'
