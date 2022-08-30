@@ -248,8 +248,6 @@ if rSIC(requiredSoftwares) == 3:
                         ncOptIndex = argv.index(ncOptions[0])
                     elif ncOptions[1] in argv and ncOptions[0] not in argv:
                         ncOptIndex = argv.index(ncOptions[1])
-                    else:
-                        print(f'You can\'t use 2 same options at the same time. Either use {ncOptions[0]} or ncOptions[1].')
 
                     ncOptValIndex = ncOptIndex + 1
 
@@ -299,6 +297,8 @@ if rSIC(requiredSoftwares) == 3:
                         gbOptIndex = argv.index(gbOptions[0])
                     elif gbOptions[1] in argv and gbOptions[0] not in argv:
                         gbOptIndex = argv.index(gbOptions[1])
+                    else:
+                        print(f'You can\'t use 2 same options at the same time. Either use {ncOptions[0]} or {ncOptions[1]}.')
 
                     gbOptValIndex = gbOptIndex + 1
 
