@@ -338,10 +338,10 @@ if rSIC(requiredSoftwares) == 3:
                         else:
                             print(f'\nBANNER GRABBING RESULTS\nPorts: {portNums}\nReports: N/A\n')
                     else:
-                        print(f'You need to execute a nm/nmap scan first to be able to execute gb/grabbanners scan.')
+                        print(f'You need to execute a {nmapOptions[0]}/{nmapOptions[1]} scan first to be able to execute {gbOptions[0]}/{gbOptions[1]} scan.')
             else:
-                print(f'There are duplicated arguments. There shouldn\'t be any duplicates in the arguments that you decided to enter. Bad Ex: crow -ping -ping 10.10.10.10. Good Ex: crow -ping 10.10.10.10')
+                print(f'There are duplicated arguments. There shouldn\'t be any duplicates in the arguments that you decided to enter. Bad Ex: crow {pingOptions[0]} {pingOptions[1]} 10.10.10.10. Good Ex: crow -ping 10.10.10.10')
         else:
-            print(f'You didn\'t entered a valid option. Type crow -h to see the help page.')
+            print(f'You didn\'t entered a valid option. Type crow {helpOptions[0]} to see the help page.')
 else:
     print(f'These packages {notInstalledRPackages} are not available on your system. You need make sure all the required packages are available on your system.')
