@@ -28,10 +28,10 @@ Crow is a command line reconnaissance tool that you can use to collect informati
 		With -grabB option you can read the latest nmap scan, identify all the open ports, loop through all them and grab all the banners.
 
 ## EXAMPLES
-	crow -ping 10.10.10.10
-	crow -ping "-c 3" 10.10.10.10
-	crow -nmap 10.10.10.10
-	crow -nmap "-sT -sV -sC -A -p-" 10.10.10.10
-	crow -netc "1-65535" 10.10.10.10
-	crow -netc "-zv" "1-65535" 10.10.10.10
-	crow -torc -ping  "-c 3" -nmap "-sT -sV -sC -A" -netc "-zv" "1-65535" -grabB 10.10.10.10
+	sudo crow -ping 10.10.10.10
+	sudo crow -ping "-c 3" 10.10.10.10
+	sudo crow -nmap 10.10.10.10
+	sudo crow -nmap "-sT -sV -sC -A -p-" 10.10.10.10
+	sudo crow -netc "1-65535" 10.10.10.10
+	sudo crow -netc "-zv" "1-65535" 10.10.10.10
+	sudo crow -torc -ping  "-c 3" -nmap "-sT -sV -sC -A" -netc "-zv" "1-65535" -grabB 10.10.10.10
