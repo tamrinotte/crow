@@ -11,7 +11,7 @@ Crow is a command line reconnaissance tool that you can use to collect informati
 
 ## Options
 
--ping, --ping 
+    -ping, --ping 
 		Use this option to ping the target device. The default options are set to -c 10
 
     -nmap, --nmap
