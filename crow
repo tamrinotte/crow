@@ -12,7 +12,7 @@ pingDocsFolder = f'{ckcPath}/{ckcFolders[0]}'
 nmapDocsFolder = f'{ckcPath}/{ckcFolders[1]}'
 ncDocsFolder = f'{ckcPath}/{ckcFolders[2]}'
 gbDocsFolder = f'{ckcPath}/{ckcFolders[3]}'
-helpOptions = ["-h", "--help", "-help", "-?"]
+helpOptions = ["--help", "-help", "-h", "-?"]
 pingOptions = ["-ping", "--ping"]
 nmapOptions = ["-nmap", "--nmap"]
 ncOptions = ["-netc", "--netc"]
@@ -206,7 +206,7 @@ if rSIC(requiredSoftwares) == 3:
                 else:
                     torChoice = ""
 
-                # 1) Ping the host, document the host's status and the date and time.
+                # 1) Ping the host, document the host's status and the date and the time.
                 if pingOptions[0] in argv or pingOptions[1] in argv:
                     if pingOptions[0] in argv and pingOptions[1] not in argv:
                         pingOptIndex = argv.index(pingOptions[0])
@@ -215,13 +215,16 @@ if rSIC(requiredSoftwares) == 3:
 
                     pingOptValIndex = pingOptIndex + 1
 
-                    if "-" in argv[pingOptValIndex] and argv[pingOptValIndex] not in nmapOptions and argv[pingOptValIndex] not in ncOptions and argv[pingOptValIndex] not in gbOptions and argv[pingOptValIndex] not in torOptions:
-                        customPOpts = argv[pingOptValIndex]
+                    if argv[pingOptValIndex] in helpOptions:
+                        system(f'ping {argv[pingOptValIndex]}')
                     else:
-                        customPOpts = "-c 10"
+                        if "-" in argv[pingOptValIndex] and argv[pingOptValIndex] not in nmapOptions and argv[pingOptValIndex] not in ncOptions and argv[pingOptValIndex] not in gbOptions and argv[pingOptValIndex] not in torOptions:
+                            customPOpts = argv[pingOptValIndex]
+                        else:
+                            customPOpts = "-c 10"
 
-                    targetA = argv[len(argv)-1]
-                    print(f'\nPING RESULTS\nNetwork Status: {sendPing(customOpts=customPOpts, torChoice=torChoice, targetA=targetA)[0]}\nReports: {sendPing(customOpts=customPOpts, torChoice=torChoice, targetA=targetA)[1]}\n')
+                        targetA = argv[len(argv)-1]
+                        print(f'\nPING RESULTS\nNetwork Status: {sendPing(customOpts=customPOpts, torChoice=torChoice, targetA=targetA)[0]}\nReports: {sendPing(customOpts=customPOpts, torChoice=torChoice, targetA=targetA)[1]}\n')
 
                 # 2) Scan the services with nmap, document the findings and the date and time.
                 if nmapOptions[0] in argv or nmapOptions[1] in argv:
@@ -232,15 +235,18 @@ if rSIC(requiredSoftwares) == 3:
 
                     nmapOptValIndex = nmapOptIndex + 1
 
-                    if "-" in argv[nmapOptValIndex] and argv[nmapOptValIndex] not in pingOptions and argv[nmapOptValIndex] not in ncOptions and argv[nmapOptValIndex] not in gbOptions and argv[nmapOptValIndex] not in torOptions:
-                        customNMOpts = argv[nmapOptValIndex]
+                    if argv[nmapOptValIndex] in helpOptions:
+                        system(f'nmap {argv[pingOptValIndex]}')
                     else:
-                        customNMOpts = "-sV -sC -sT -A -p-"
+                        if "-" in argv[nmapOptValIndex] and argv[nmapOptValIndex] not in pingOptions and argv[nmapOptValIndex] not in ncOptions and argv[nmapOptValIndex] not in gbOptions and argv[nmapOptValIndex] not in torOptions:
+                            customNMOpts = argv[nmapOptValIndex]
+                        else:
+                            customNMOpts = "-sV -sC -sT -A -p-"
 
-                    targetA = argv[len(argv)-1]
-                    print(f'\nNMAP RESULTS\nReports: {nmapScan(customOpts=customNMOpts, torChoice=torChoice, targetA=targetA)}\n')
+                        targetA = argv[len(argv)-1]
+                        print(f'\nNMAP RESULTS\nReports: {nmapScan(customOpts=customNMOpts, torChoice=torChoice, targetA=targetA)}\n')
 
-                # 3) Use netcat like a swiss knife
+                # 3) Use the netcat like a swiss army knife
                 if ncOptions[0] in argv or ncOptions[1] in argv:
                     portSpec = None
                     subNCArgv1IsI = None
@@ -253,41 +259,44 @@ if rSIC(requiredSoftwares) == 3:
 
                     ncOptValIndex = ncOptIndex + 1
 
-                    targetA = argv[len(argv)-1]
+                    if argv[ncOptValIndex] in helpOptions:
+                        system(f'nc {argv[ncOptValIndex]}')
+                    else:
+                        targetA = argv[len(argv)-1]
 
-                    try:
-                        intId = int(argv[ncOptValIndex][0:1])
-                        subNCArgv1IsI = True
-                    except:
-                        subNCArgv1IsI = False
-
-                    if "-" in argv[ncOptValIndex] and subNCArgv1IsI == False and argv[ncOptValIndex] not in pingOptions and argv[ncOptValIndex] not in nmapOptions and argv[ncOptValIndex] not in gbOptions and argv[ncOptValIndex] not in torOptions:
-                        customNCOpts = argv[ncOptValIndex]
                         try:
-                            int(argv[ncOptValIndex + 1][0:1])
-                            subNCArgv2IsI = True
+                            intId = int(argv[ncOptValIndex][0:1])
+                            subNCArgv1IsI = True
                         except:
-                            subNCArgv2IsI = False
+                            subNCArgv1IsI = False
 
-                        if subNCArgv2IsI != False:
-                            portSpec = argv[ncOptValIndex + 1]
+                        if "-" in argv[ncOptValIndex] and subNCArgv1IsI == False and argv[ncOptValIndex] not in pingOptions and argv[ncOptValIndex] not in nmapOptions and argv[ncOptValIndex] not in gbOptions and argv[ncOptValIndex] not in torOptions:
+                            customNCOpts = argv[ncOptValIndex]
+                            try:
+                                int(argv[ncOptValIndex + 1][0:1])
+                                subNCArgv2IsI = True
+                            except:
+                                subNCArgv2IsI = False
 
-                    elif "-" in argv[ncOptValIndex] and subNCArgv1IsI == True and argv[ncOptValIndex] not in pingOptions and argv[ncOptValIndex] not in nmapOptions and argv[ncOptValIndex] not in gbOptions and argv[ncOptValIndex] not in torOptions:
-                        customNCOpts = "-zv"
-                        portSpec = argv[ncOptValIndex]
+                            if subNCArgv2IsI != False:
+                                portSpec = argv[ncOptValIndex + 1]
 
-                    elif "-" not in argv[ncOptValIndex] and subNCArgv1IsI == True and argv[ncOptValIndex] not in pingOptions and argv[ncOptValIndex] not in nmapOptions and argv[ncOptValIndex] not in gbOptions and argv[ncOptValIndex] not in torOptions:
-                        customNCOpts = "-zv"
-                        portSpec = argv[ncOptValIndex]
+                        elif "-" in argv[ncOptValIndex] and subNCArgv1IsI == True and argv[ncOptValIndex] not in pingOptions and argv[ncOptValIndex] not in nmapOptions and argv[ncOptValIndex] not in gbOptions and argv[ncOptValIndex] not in torOptions:
+                            customNCOpts = "-zv"
+                            portSpec = argv[ncOptValIndex]
 
-                    elif argv[ncOptValIndex] in pingOptions or argv[ncOptValIndex] in nmapOptions or argv[ncOptValIndex] in gbOptions:
-                        print(f'You need to provide a port specification right after the netcat({ncOptions[0]}, {ncOptions[1]}) option to be able to use netcat features properly. Ex: crow {ncOptions[0]} "10" {pingOptions[0]} "-c 3" 10.10.10.10. Type "crow {helpOptions[0]}" to see the help page.')
+                        elif "-" not in argv[ncOptValIndex] and subNCArgv1IsI == True and argv[ncOptValIndex] not in pingOptions and argv[ncOptValIndex] not in nmapOptions and argv[ncOptValIndex] not in gbOptions and argv[ncOptValIndex] not in torOptions:
+                            customNCOpts = "-zv"
+                            portSpec = argv[ncOptValIndex]
 
-                    elif argv[ncOptValIndex] == targetA:
-                        print(f'You need to provide a port specification to be able to use netcat features properly. Type "crow {helpOptions[0]}" to see the help page.')
+                        elif argv[ncOptValIndex] in pingOptions or argv[ncOptValIndex] in nmapOptions or argv[ncOptValIndex] in gbOptions:
+                            print(f'You need to provide a port specification right after the netcat({ncOptions[0]}, {ncOptions[1]}) option to be able to use netcat features properly. Ex: crow {ncOptions[0]} "10" {pingOptions[0]} "-c 3" 10.10.10.10. Type "crow {helpOptions[0]}" to see the help page.')
 
-                    if portSpec:
-                        print(f'\nNETCAT RESULTS\nReports: {netcatSwissArmyKnife(customOpts=customNCOpts, torChoice=torChoice, portN=portSpec, targetA=targetA)}\n')
+                        elif argv[ncOptValIndex] == targetA:
+                            print(f'You need to provide a port specification to be able to use netcat features properly. Type "crow {helpOptions[0]}" to see the help page.')
+
+                        if portSpec:
+                            print(f'\nNETCAT RESULTS\nReports: {netcatSwissArmyKnife(customOpts=customNCOpts, torChoice=torChoice, portN=portSpec, targetA=targetA)}\n')
 
                 # 4) Grap Service Banners with Netcat
                 if gbOptions[0] in argv or gbOptions[1] in argv:
