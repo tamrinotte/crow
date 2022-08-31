@@ -10,6 +10,13 @@ Crow is a command line reconnaissance tool that you can use to collect informati
 5) proxychains 
 6) curl
 
+## INSTALLATION
+1) ```git clone https://github.com/tamrinotte/crow.git```
+2) ```cd crow```
+3) ```sudo cp crow /usr/bin/```
+4) ```sudo chown $USER:$USER /usr/bin/crow && sudo chmod u+x /usr/bin/crow```
+
+
 ## OPTIONS
 
     -ping, --ping 
@@ -18,13 +25,13 @@ Crow is a command line reconnaissance tool that you can use to collect informati
     -nmap, --nmap
 		Use this option to scan the services available on the target device. Use double quotes to enter the options that are available on nmap's it self. The default options are set to -sT -sV -sC -A -p-
 
-    -netc, --netc
+	-netc, --netc
 		You can use this option to basically do anything that you would do with netcat's it self. You can type crow -netc "-z -v" "1-65535" site.com to scan the ports that are available on the target server. You can also use it to create small web server, a file transfer tool or to listen TCP connections and to listen UDP activities. The default options are set to "-zv".
 
-    -torc, --torc
+	-torc, --torc
 		The tor option is to forward your request over a tor connection.
 	
-    -grabB, --grabB
+	-grabB, --grabB
 		With -grabB option you can read the latest nmap scan, identify all the open ports, loop through all them and grab all the banners.
 
 ## EXAMPLES
