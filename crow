@@ -236,7 +236,7 @@ if rSIC(requiredSoftwares) == 3:
                     nmapOptValIndex = nmapOptIndex + 1
 
                     if argv[nmapOptValIndex] in helpOptions:
-                        system(f'nmap {argv[pingOptValIndex]}')
+                        system(f'nmap {argv[nmapOptValIndex]}')
                     else:
                         if "-" in argv[nmapOptValIndex] and argv[nmapOptValIndex] not in pingOptions and argv[nmapOptValIndex] not in ncOptions and argv[nmapOptValIndex] not in gbOptions and argv[nmapOptValIndex] not in torOptions:
                             customNMOpts = argv[nmapOptValIndex]
