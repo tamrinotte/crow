@@ -7,7 +7,7 @@ from datetime import datetime
 
 # VARIABLES
 ckcPath = f'/root/.cyber_kill_chain/reconnaissance'
-ckcFolders = ["pingDocs", "nmapDocs", "ncDocs", "gbDocs"]
+ckcFolders = ["ping_docs", "nmap_docs", "nc_docs", "gb_docs"]
 pingDocsFolder = f'{ckcPath}/{ckcFolders[0]}'
 nmapDocsFolder = f'{ckcPath}/{ckcFolders[1]}'
 ncDocsFolder = f'{ckcPath}/{ckcFolders[2]}'
@@ -18,16 +18,15 @@ nmapOptions = ["-nmap", "--nmap"]
 ncOptions = ["-netc", "--netc"]
 torOptions = ["-torc", "--torc"]
 gbOptions = ["-grabB", "--grabB"]
-requiredSoftwares = ["iputils-ping", "nmap", "netcat"]
-darknetSoftwares = ["tor", "proxychains", "curl"]
 proxychainsConfFP = "/etc/proxychains.conf"
 notInstalledRPackages = []
 notInstalledDPackages = []
 
 # FUNCTIONS
-def rSIC(requiredSoftwares):
+def rSIC():
     """A function to check if all primary required softwares are installed/avaliable on the system"""
 
+    requiredSoftwares = ["iputils-ping", "nmap", "netcat"]
     requiredSIS = 0
 
     for s in requiredSoftwares:
@@ -48,9 +47,10 @@ def rSIC(requiredSoftwares):
 
     return requiredSIS
 
-def dNSIC(darknetSoftwares):
+def dNSIC():
     """A function to check if all required softwares for tor/darknet are installed/available on the system."""
 
+    darknetSoftwares = ["tor", "proxychains", "curl"]
     darknetSIS = 0
 
     for s in darknetSoftwares:
@@ -144,7 +144,7 @@ def duplicateChecker(values):
         return False
 
 
-if rSIC(requiredSoftwares) == 3:
+if rSIC() == 3:
 
     if argv[1] in helpOptions:
         print('\033[1m' + "NAME" + '\033[0m' + "\n\t" + 'crow - A command line reconnaissance tool that will collect information about the target system and document them in xml files with dates and times.\n\n' + '\033[1m' + 'USAGE' + '\033[0m'+ "\n\t" + 'crow [CROW OPTION] "[Custom Options]" "[Value/Values]" "targetA"' + "\n\n" + '\033[1m' + 'DESCRIPTION' + '\033[0m' +"\n\t" + "Collect information about the target system by sending it pings, scanning it's ports and grabbing service banners. Document the findings into xml files with the dates and times.\n\n\t" + f'{pingOptions[0]}, {pingOptions[1]} \n\t\tUse this option to ping the target device. The default options are set to -c 10' + "\n\n\t" + f'{nmapOptions[0]}, {nmapOptions[1]}\n\t\t' + "Use this option to scan the services available on the target device. Use double quotes to use the options that are available to nmap's it self. The default options are set to -sV -sC -sT -A -p-" + "\n\n\t" + f'{ncOptions[0]}, {ncOptions[1]}' + "\n\t\t" + f'You can use this option to basically do anything that you would do with netcat\'s it self. You can type crow {ncOptions[0]} "-z -v" "1-65535" site.com to scan the ports that are available on the target server. You can also use it as a small web server, a file transfer tool or to listen TCP connections and to listen UDP activities. The default options are set to "-zv".\n\n\t' + f'{torOptions[0]}, {torOptions[1]}' + "\n\t\t" + "The tor option is to forward your request from a tor connection." + "\n\n\t" + "-grabB, --grabB" + "\n\t\t" + f'With {gbOptions[0]} option you can read the latest nmap scan, identify all the open ports, loop through all them and grab all the banners.' + "\n\n" + '\033[1m' + 'EXAMPLES' + '\033[0m' + "\n\t" + f'crow {pingOptions[0]} 10.10.10.10\n\t' + f'crow {pingOptions[0]} "-c 3" 10.10.10.10\n\t' + f'crow {nmapOptions[0]} 10.10.10.10\n\t' + f'crow {nmapOptions[0]} "-sT -sV -sC -A -p-" 10.10.10.10\n\t' + f'crow {ncOptions[0]} "1-65535" 10.10.10.10\n\t' + f'crow {ncOptions[0]} "-zv" "1-65535" 10.10.10.10\n\t' + f'crow {nmapOptions[0]} {gbOptions[0]} 10.10.10.10\n\t' + f'crow {torOptions[0]} {nmapOptions[0]} "-sT -sV -sC -A" {gbOptions[0]}\n\t' + f'crow {torOptions[0]} {pingOptions[0]}  "-c 3" {nmapOptions[0]} "-sT -sV -sC -A" {ncOptions[0]} "-zv" "1-65535" {gbOptions[0]} 10.10.10.10\n\t')
@@ -157,7 +157,7 @@ if rSIC(requiredSoftwares) == 3:
                 # Send the requests over a proxy server using tor and proxychains together.
                 if torOptions[0] in argv or torOptions[1] in argv:
 
-                    if dNSIC(darknetSoftwares) == 3:
+                    if dNSIC() == 3:
 
                         torStatus = popen(f'systemctl status tor').read()
 
@@ -346,11 +346,15 @@ if rSIC(requiredSoftwares) == 3:
 
                         else:
                             print(f'\nBANNER GRABBING RESULTS\nPorts: {portNums}\nReports: N/A\n')
+
                     else:
                         print(f'You need to execute a {nmapOptions[0]}/{nmapOptions[1]} scan first to be able to execute {gbOptions[0]}/{gbOptions[1]} scan.')
+
             else:
                 print(f'There are duplicated arguments. There shouldn\'t be any duplicates in the arguments that you decided to enter. Bad Ex: crow {pingOptions[0]} {pingOptions[1]} 10.10.10.10. Good Ex: crow -ping 10.10.10.10')
+
         else:
             print(f'You didn\'t entered a valid option. Type crow {helpOptions[0]} to see the help page.')
+
 else:
     print(f'These packages {notInstalledRPackages} are not available on your system. You need make sure all the required packages are available on your system.')
